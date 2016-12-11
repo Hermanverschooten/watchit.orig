@@ -3,6 +3,9 @@
 use Mix.Config
 
 config :watchit,
+  sipserver: "fill in",
+  user: "fill in",
+  password: "fill in",
   door: [
     sound: "emergency.wav",
     pin: 22,
@@ -20,3 +23,4 @@ config :watchit,
   ]
 
 import_config "#{Mix.env}.exs"
+
