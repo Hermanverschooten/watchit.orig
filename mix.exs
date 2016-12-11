@@ -3,7 +3,7 @@ defmodule Watchit.Mixfile do
 
   def project do
     [app: :watchit,
-     version: "0.1.0",
+     version: "0.2.0",
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -14,7 +14,8 @@ defmodule Watchit.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger],
+    [applications: [:logger, :rollbax],
+     included_applications: [:gpio_rpi, :logger_file_backend],
      mod: {Watchit, []}]
   end
 
@@ -28,6 +29,11 @@ defmodule Watchit.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:gpio_rpi, "~> 0.0"}]
+    [
+      {:gpio_rpi, "~> 0.0"},
+      {:logger_file_backend, "~> 0.0"},
+      {:rollbax, "~> 0.5"},
+      {:distillery, "~> 1.0"}
+    ]
   end
 end

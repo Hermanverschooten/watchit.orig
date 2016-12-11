@@ -22,5 +22,19 @@ config :watchit,
     dest: ""
   ]
 
+config :logger,
+  backends: [{LoggerFileBackend, :info}]
+
+config :logger, :info,
+  path: "/var/log/watchit.log",
+  level: :debug
+
+config :distillery,
+  no_warn_missing: [ :elixir_make ]
+
+config :rollbax,
+  access_token: "91a971a2496947889fa0f52c2abb382f",
+  environment: "production"
+
 import_config "#{Mix.env}.exs"
 

@@ -1,24 +1,16 @@
 # Watchit
 
-**TODO: Add description**
+Watch a GPIO pin on a raspberry pi and if triggered, call a SIP number and play a message.
+Set a daily alarm and call a SIP number, play a message at that time.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+This currently depends on python with pjsua installed.
 
-  1. Add `watchit` to your list of dependencies in `mix.exs`:
-
-    ```elixir
-    def deps do
-      [{:watchit, "~> 0.1.0"}]
-    end
-    ```
-
-  2. Ensure `watchit` is started before your application:
-
-    ```elixir
-    def application do
-      [applications: [:watchit]]
-    end
-    ```
-
+  1. clone the repo
+  2. Fill in the missing information in config/config.exs
+  3. start with:
+     ```
+     MIX_ENV=prod mix compile
+     MIX_ENV=prod elixir --detached -S mix run --no-halt
+     ```
