@@ -10,31 +10,28 @@ defmodule Watchit.PinWatch do
   def init(opts) do
     Logger.info "#{opts[:pin]} - Started worker PinWatch"
     {:ok, pid} = GpioRpi.start_link(opts[:pin], :input)
-    :ok = GpioRpi.set_int(pid, :both)
-    {:ok, opts ++ [ pid: pid, pin_state: nil, last: 0]}
+    GpioRpi.set_mode pid, :down
+    Process.send_after(self, :tick, 1000)
+    {:ok, opts ++ [ pid: pid, pin_state: GpioRpi.read(pid), last: 0]}
   end
 
-  def handle_info({:gpio_interrupt, _pin, :falling}, state) do
-    Logger.debug "#{state[:pin]} - Falling"
-    state = case state[:pin_state] do
-      :rising ->
-        case play(state) do
-          :played -> update(state, :last, now)
-          _ -> state
-        end 
-      :falling ->
-        Logger.debug "#{state[:pin]} - State is still triggered."
-        state
-      nil ->
-        Logger.debug "#{state[:pin]} - Initial state set"
-        update(state, :last, now)
-    end
-    {:noreply, update(state, :pin_state, :falling)}
+  def handle_info(:tick, state) do
+    state = run(GpioRpi.read(state[:pid]), state[:pin_state], state)
+    Process.send_after(self, :tick, 1000)
+    {:noreply, state}
   end
 
-  def handle_info({:gpio_interrupt, _pin, :rising}, state) do
-    Logger.debug "#{state[:pin]} - Rising"
-    {:noreply, update(state, :pin_state, :rising)}
+  def run(0,1, state) do
+    Logger.debug "#{state[:pin]} - 1 -> 0"
+    state = case play(state) do
+      :played -> update(state, :last, now)
+      _ -> state
+    end 
+    update(state, :pin_state, 0)
+  end
+
+  def run(new_state, _, state) do
+    update(state, :pin_state, new_state)
   end
 
   defp now, do: DateTime.utc_now |> DateTime.to_unix
