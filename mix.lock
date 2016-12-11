@@ -1,0 +1,2 @@
+%{"elixir_make": {:hex, :elixir_make, "0.4.0", "992f38fabe705bb45821a728f20914c554b276838433349d4f2341f7a687cddf", [:mix], []},
+  "gpio_rpi": {:hex, :gpio_rpi, "0.1.0", "dc9cf817636f217fc61964c7d6f73dd3a629379e257ac6c88647e289ba4cd139", [:make, :mix], [{:elixir_make, "~>0.3", [hex: :elixir_make, optional: false]}]}}
