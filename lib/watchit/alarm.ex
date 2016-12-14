@@ -16,7 +16,7 @@ defmodule Watchit.Alarm do
   def handle_info(:tick, state) do
     Logger.debug "tick"
     Process.send_after(self(), :tick, 60_000)
-    case now?(state[:time], DateTime.utc_now) do
+    case now?(state[:time], :calendar.local_time) do
       true -> 
         Logger.info "Time reached - playing"
         Play.sound(state)
@@ -25,5 +25,5 @@ defmodule Watchit.Alarm do
     {:noreply, state}
   end
 
-  def now?(time1, time2), do: {time1.hour, time1.minute} == {time2.hour, time2.minute}
+  def now?(time1, {_, {h, m, _}}), do: {time1.hour, time1.minute} == {h, m}
 end
