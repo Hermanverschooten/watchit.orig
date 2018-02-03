@@ -17,7 +17,7 @@ config :watchit,
     dest: ""
   ],
   alarm: [
-    time: ~T[07:30:00],
+    time: ~T[07:53:00],
     sound: "presence.wav",
     dest: ""
   ]
