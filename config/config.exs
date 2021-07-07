@@ -16,8 +16,13 @@ config :watchit,
     pin: 27,
     dest: ""
   ],
+  fire2: [
+    sound: "storing.wav",
+    pin: 17,
+    dest: ""
+  ],
   alarm: [
-    time: ~T[07:53:00],
+    time: ~T[07:48:00],
     sound: "presence.wav",
     dest: ""
   ]

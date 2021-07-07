@@ -4,6 +4,7 @@ defmodule Watchit do
   @alarm Application.get_env(:watchit, :alarm)
   @door Application.get_env(:watchit, :door)
   @fire Application.get_env(:watchit, :fire)
+  @fire2 Application.get_env(:watchit, :fire2)
   
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
@@ -14,7 +15,8 @@ defmodule Watchit do
       # worker(Watchit.Worker, [arg1, arg2, arg3]),
       worker(Watchit.Alarm, [@alarm]),
       worker(Watchit.PinWatch, [@door], id: :door),
-      worker(Watchit.PinWatch, [@fire], id: :fire)
+      worker(Watchit.PinWatch, [@fire], id: :fire),
+      worker(Watchit.OpenPinWatch, [@fire2], id: :fire2)
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
